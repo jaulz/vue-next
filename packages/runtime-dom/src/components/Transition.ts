@@ -137,20 +137,15 @@ export function resolveTransitionProps(
   const legacyClassEnabled =
     __COMPAT__ &&
     compatUtils.isCompatEnabled(DeprecationTypes.TRANSITION_CLASSES, null)
-  let legacyEnterFromClass: string
-  let legacyAppearFromClass: string
-  let legacyLeaveFromClass: string
+  let legacyEnterFromClass: string = enterFromClass
+  let legacyAppearFromClass: string = appearFromClass
+  let legacyLeaveFromClass: string = leaveFromClass
   if (__COMPAT__ && legacyClassEnabled) {
     const toLegacyClass = (cls: string) => cls.replace(/-from$/, '')
-    if (!rawProps.enterFromClass) {
-      legacyEnterFromClass = toLegacyClass(enterFromClass)
-    }
-    if (!rawProps.appearFromClass) {
-      legacyAppearFromClass = toLegacyClass(appearFromClass)
-    }
-    if (!rawProps.leaveFromClass) {
-      legacyLeaveFromClass = toLegacyClass(leaveFromClass)
-    }
+    
+    legacyEnterFromClass = !rawProps.enterFromClass ? toLegacyClass(enterFromClass) : enterFromClass
+    legacyAppearFromClass = !rawProps.appearFromClass ? toLegacyClass(appearFromClass) : appearFromClass
+    legacyLeaveFromClass = !rawProps.leaveFromClass ? toLegacyClass(leaveFromClass : leaveFromClass
   }
 
   const durations = normalizeDuration(duration)
