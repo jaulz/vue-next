@@ -76,7 +76,7 @@ export const ssrTransformElement: NodeTransform = (node, context) => {
     // we need to bail out to full `renderAttrs`
     const hasDynamicVBind = hasDynamicKeyVBind(node)
     if (hasDynamicVBind) {
-      const { props } = buildProps(node, context, node.props, true /* ssr */)
+      const { props } = buildProps(node, context, node.props, true /* ssr */, rawChildrenMap)
       if (props) {
         const propsExp = createCallExpression(
           context.helper(SSR_RENDER_ATTRS),
@@ -194,7 +194,9 @@ export const ssrTransformElement: NodeTransform = (node, context) => {
             const { props, ssrTagParts } = directiveTransform(
               prop,
               node,
-              context
+              context,
+              undefined,
+              rawChildrenMap
             )
             if (ssrTagParts) {
               openTag.push(...ssrTagParts)
